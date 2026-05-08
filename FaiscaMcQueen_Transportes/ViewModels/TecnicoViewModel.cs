@@ -1,4 +1,4 @@
-﻿using FaiscaMcQueen_Transportes.Data;
+﻿using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
 using System.ComponentModel.DataAnnotations;
 
 namespace FaiscaMcQueen_Transportes.ViewModels

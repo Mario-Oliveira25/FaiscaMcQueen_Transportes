@@ -1,12 +1,13 @@
-﻿using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
+using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
 
-namespace FaiscaMcQueen_Transportes.Data
+
+namespace FaiscaMcQueen_Transportes.Data.FaiscaMcQueen
 {
     public class Intervencao
     {
-        public enum Estado
+        public enum estado
         {
             Pendente,
             EmCurso,
@@ -15,11 +16,12 @@ namespace FaiscaMcQueen_Transportes.Data
         [Key]
         public Guid Id { get; set; }
         [Required(ErrorMessage = "O estado é obrigatório.")]
-        public Estado estado { get; set; }
+        public estado Estado { get; set; }
         [Required(ErrorMessage = "A data é obrigatória.")]
         public DateTime Data { get; set; }
         [Required(ErrorMessage = "A descrição é obrigatória.")]
         public string Descricao { get; set; } = string.Empty;
+
         [Required]
         public Guid? AtivoId { get; set; }
         public virtual Ativo Ativo { get; set; }

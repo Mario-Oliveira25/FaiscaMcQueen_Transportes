@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace FaiscaMcQueen_Transportes.ViewModels
@@ -19,10 +20,9 @@ namespace FaiscaMcQueen_Transportes.ViewModels
     public string Descricao { get; set; }= string.Empty;
 
     [Required]
-    public string Estado { get; set; } = "Pendente";
+    public Intervencao.estado Estado { get; set; } = Intervencao.estado.Pendente;
 
-    public SelectList Ativos { get; set; }
-    public SelectList Tecnicos { get; set; }
-
+    public List<SelectListItem>? Ativos { get; set; }
+    public List<SelectListItem>? Tecnicos { get; set; }
     }
 }
