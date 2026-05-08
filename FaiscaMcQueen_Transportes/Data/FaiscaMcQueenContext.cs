@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,13 +32,13 @@ namespace FaiscaMcQueen_Transportes.Data
                 entity.HasOne(intervencao => intervencao.Ativo)
                     .WithMany(ativo => ativo.Intervencoes)
                     .HasForeignKey(intervencao => intervencao.AtivoId)
-                    .OnDelete(DeleteBehavior.Restrict); // Evita apagar o ativo se houver histórico
+                    .OnDelete(DeleteBehavior.SetNull);
 
                 //Um Técnico tem Muitas Intervenções
                 entity.HasOne(intervencao => intervencao.Tecnico)
                     .WithMany(tecnico => tecnico.Intervencoes)
                     .HasForeignKey(intervencao => intervencao.TecnicoId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.SetNull);
             });
 
         }
