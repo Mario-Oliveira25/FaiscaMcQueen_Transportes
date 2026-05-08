@@ -13,11 +13,11 @@ namespace FaiscaMcQueen_Transportes.Data
         }
         [Key]
         public Guid Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "O estado é obrigatório.")]
         public Estado estado { get; set; }
-        [Required]
+        [Required(ErrorMessage = "A data é obrigatória.")]
         public DateTime Data { get; set; }
-        [Required]
+        [Required(ErrorMessage = "A descrição é obrigatória.")]
         public string Descricao { get; set; } = string.Empty;
         [Required]
         public Guid AtivoId { get; set; }
