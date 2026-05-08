@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
 
@@ -23,11 +24,10 @@ namespace FaiscaMcQueen_Transportes.Data
         public string Descricao { get; set; } = string.Empty;
 
         [Required]
-        public Guid AtivoId { get; set; }
-        public Ativo Ativo { get; set; }
-
+        public Guid? AtivoId { get; set; }
+        public virtual Ativo Ativo { get; set; }
         [Required]
-        public Guid TecnicoId { get; set; }
-        public Tecnico Tecnico { get; set; }
+        public Guid? TecnicoId { get; set; }
+        public virtual Tecnico Tecnico { get; set; }
     }
 }
