@@ -12,7 +12,7 @@ namespace FaiscaMcQueen_Transportes.Data.FaiscaMcQueen
         ErrorMessage = "A matrícula é inválida. Use um formato português válido (Ex: AA-00-00, 00-AA-00, etc.) e letras maiúsculas.")]
         public string Matricula { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "O Tipo de veículo é obrigatório (Ex.: Camião, Máquina)"]
+        [Required(ErrorMessage = "O Tipo de veículo é obrigatório (Ex.: Camião, Máquina)")]
         public string Tipo { get; set; } = string.Empty;
 
         public string Marca {  get; set; } = string.Empty;
