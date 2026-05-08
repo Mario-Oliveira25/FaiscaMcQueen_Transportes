@@ -56,7 +56,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Chefe de equipa")]
+        [Authorize(Roles = "Chefe de Equipa")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RegistoIntervencaoViewModel model)
@@ -102,6 +102,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Chefe de Equipa")]
         [HttpPost]
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -116,6 +117,8 @@ namespace FaiscaMcQueen_Transportes.Controllers
             }
             return View(intervencao);
         }
+
+        [Authorize(Roles = "Chefe de Equipa")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid? id)
@@ -129,7 +132,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        [Authorize]
+        [Authorize(Roles = "Chefe de Equipa")]
         [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -144,7 +147,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
             }
             return View(intervencao);
         }
-        [Authorize]
+        [Authorize(Roles = "Chefe de Equipa")]
         [HttpPost]
         public async Task<IActionResult> Edit(Guid id, Intervencao intervencao)
         {
