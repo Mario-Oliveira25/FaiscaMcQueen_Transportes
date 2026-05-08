@@ -6,9 +6,9 @@ namespace FaiscaMcQueen_Transportes.Data
 {
     public class FaiscaMcQueenContext : IdentityDbContext<IdentityUser>
     {
-        public FaiscaMcQueenContext(DbContextOptions<FaiscaMcQueenContext> options) : base(options) 
+        public FaiscaMcQueenContext(DbContextOptions<FaiscaMcQueenContext> options) : base(options)
         {
-        
+
         }
 
         public DbSet<Ativo> Ativos { get; set; }
