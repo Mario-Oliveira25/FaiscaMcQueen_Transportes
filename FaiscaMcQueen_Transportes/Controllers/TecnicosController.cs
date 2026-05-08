@@ -2,6 +2,7 @@
 using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
 using FaiscaMcQueen_Transportes.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FaiscaMcQueen_Transportes.Controllers
 {
@@ -16,7 +17,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var tecnicos = await _context.Tecnicos.ToList();
+            var tecnicos = await _context.Tecnicos.ToListAsync();
 
             return View(tecnicos);
         }
@@ -55,9 +56,9 @@ namespace FaiscaMcQueen_Transportes.Controllers
         {
             if (id == null) return NotFound();
 
-            var tecnico =  await _context.Tecnicos
+            var tecnico = await _context.Tecnicos
                                       .Include(t => t.Intervencoes)
-                                      .FirstOrDefault(t => t.Id == id);
+                                      .FirstOrDefaultAsync(t => t.Id == id);
 
             if (tecnico == null)
             {
@@ -83,7 +84,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
         {
             if (id == null) return NotFound();
 
-            var tecnico = await _context.Tecnicos.FirstOrDefault(t => t.Id == id);
+            var tecnico = await _context.Tecnicos.FirstOrDefaultAsync(t => t.Id == id);
 
             if (tecnico == null)
             {
@@ -107,7 +108,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
         {
             if (ModelState.IsValid)
             {
-                var tecnico = await _context.Tecnicos.FirstOrDefault(t => t.Id == viewModel.Id);
+                var tecnico = await _context.Tecnicos.FirstOrDefaultAsync(t => t.Id == viewModel.Id);
 
                 if (tecnico == null) return NotFound();
 
@@ -129,7 +130,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
         {
             if (id == null) return NotFound();
 
-            var tecnico = await _context.Tecnicos.FindAsync(id);
+            var tecnico = await _context.Tecnicos.FirstOrDefaultAsync(t => t.Id == id);
 
             if (tecnico == null)
             {
@@ -151,7 +152,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
         {
             if (id == null) return NotFound();
 
-            var tecnico = await _context.Tecnicos.FindAsync(id);
+            var tecnico = await _context.Tecnicos.FirstOrDefaultAsync(t => t.Id == id);
 
             if (tecnico != null)
             {
