@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\FaiscaMcQueen\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
