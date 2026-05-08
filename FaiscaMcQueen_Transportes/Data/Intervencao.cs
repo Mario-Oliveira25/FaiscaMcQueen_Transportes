@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 
 namespace FaiscaMcQueen_Transportes.Data
