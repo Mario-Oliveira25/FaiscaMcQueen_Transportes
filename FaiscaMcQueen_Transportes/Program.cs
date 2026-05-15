@@ -30,6 +30,19 @@ namespace FaiscaMcQueen_Transportes
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddMemoryCache(options =>
+            {
+                // Limite de tamanho do cache em memória
+                options.CompactionPercentage = 0.25;  // Remove 25% dos dados menos usados quando atinge limite
+                options.SizeLimit = 100 * 1024 * 1024; // 100 MB máximo
+            });
+          
+
+            builder.Services.AddResponseCaching(options =>
+            {
+                options.MaximumBodySize = 1024 * 1024; // 1 MB de body cacheado
+                options.UseCaseSensitivePaths = false;  // /Index e /index são tratadas igual
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -47,6 +60,8 @@ namespace FaiscaMcQueen_Transportes
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseResponseCaching();
 
             app.MapControllerRoute(
                 name: "default",

@@ -16,9 +16,16 @@ namespace FaiscaMcQueen_Transportes.Data.FaiscaMcQueen
         [Key]
         public Guid Id { get; set; }
         [Required(ErrorMessage = "O estado é obrigatório.")]
+  
         public estado Estado { get; set; }
-        [Required(ErrorMessage = "A data é obrigatória.")]
-        public DateTime Data { get; set; }
+
+        [Required(ErrorMessage = "A data de criação é obrigatória.")]
+        public DateTime DataCriacao { get; set; } = DateTime.Now;
+
+        public DateTime DataInicio { get; set; }
+
+        public DateTime? DataFim { get; set; }
+
         [Required(ErrorMessage = "A descrição é obrigatória.")]
         public string Descricao { get; set; } = string.Empty;
 
