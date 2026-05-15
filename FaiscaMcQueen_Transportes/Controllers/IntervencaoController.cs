@@ -69,7 +69,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
 
             return View(intervencao);
         }
-        [Authorize(Roles = "Chefe de equipa")]
+        [Authorize(Roles = "Chefe de Equipa")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -106,7 +106,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Chefe de equipa")]
+        [Authorize(Roles = "Chefe de Equipa")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RegistoIntervencaoViewModel model)

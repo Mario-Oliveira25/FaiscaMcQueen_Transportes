@@ -10,7 +10,9 @@ namespace FaiscaMcQueen_Transportes.Data.FaiscaMcQueen
         public enum estado
         {
             Pendente,
+            [Display(Name = "Em Curso")]
             EmCurso,
+            [Display(Name = "Concluído")]
             Concluido
         }
         [Key]
@@ -29,10 +31,8 @@ namespace FaiscaMcQueen_Transportes.Data.FaiscaMcQueen
         [Required(ErrorMessage = "A descrição é obrigatória.")]
         public string Descricao { get; set; } = string.Empty;
 
-        [Required]
         public Guid? AtivoId { get; set; }
         public virtual Ativo Ativo { get; set; }
-        [Required]
         public Guid? TecnicoId { get; set; }
         public virtual Tecnico Tecnico { get; set; }
     }

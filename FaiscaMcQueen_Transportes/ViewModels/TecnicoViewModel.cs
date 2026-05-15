@@ -9,6 +9,8 @@ namespace FaiscaMcQueen_Transportes.ViewModels
 
         [Required(ErrorMessage = "O nome é obrigatório.")]
         public string Nome { get; set; } = string.Empty;
+        [EmailAddress(ErrorMessage = "Email inválido.")]
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "O NIF é obrigatório")]
         [RegularExpression(@"^[1235689]\d{8}$", ErrorMessage = "O NIF inválido.")]
