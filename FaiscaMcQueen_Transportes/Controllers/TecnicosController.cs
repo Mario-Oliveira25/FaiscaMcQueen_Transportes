@@ -32,11 +32,11 @@ namespace FaiscaMcQueen_Transportes.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new NovoTecnicoViewModel());
+            return View(new TecnicoViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(NovoTecnicoViewModel viewModel)
+        public async Task<IActionResult> Create(TecnicoViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
