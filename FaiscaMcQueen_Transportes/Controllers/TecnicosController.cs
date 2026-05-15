@@ -1,6 +1,8 @@
 ﻿using FaiscaMcQueen_Transportes.Data;
 using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
+using FaiscaMcQueen_Transportes.Models;
 using FaiscaMcQueen_Transportes.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +11,12 @@ namespace FaiscaMcQueen_Transportes.Controllers
     public class TecnicosController : Controller
     {
         private readonly FaiscaMcQueenContext _context;
+        private readonly UserManager<ApplicationUser> _usermanager;
 
-        public TecnicosController(FaiscaMcQueenContext context)
+        public TecnicosController(FaiscaMcQueenContext context, UserManager<ApplicationUser> usermanager)
         {
             _context = context;
+            _usermanager = usermanager;
         }
 
         public async Task<IActionResult> Index()
@@ -45,7 +49,29 @@ namespace FaiscaMcQueen_Transportes.Controllers
                 _context.Tecnicos.Add(novoTecnico);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Details", new {id = novoTecnico.Id});
+                var user = new ApplicationUser
+                {
+                    UserName = viewModel.Nome.Replace(" ", "").ToLower(),
+                    Email = $"{viewModel.Nome.Replace(" ", "").ToLower()}@faiscamcqueen.com",
+                    TecnicoId = novoTecnico.Id,
+                    EmailConfirmed = true
+                };
+                var resultado = await _usermanager.CreateAsync(user);
+
+                if (resultado.Succeeded)
+                {
+                    await _usermanager.AddToRoleAsync(user, "Chefe de equipa");
+                }
+                else if (!resultado.Succeeded)
+                {
+                    _context.Tecnicos.Remove(novoTecnico);
+                    await _context.SaveChangesAsync();
+                    return Json(new { 
+                        success = false,
+                        errors = resultado.Errors.Select(e => e.Description) });
+                }
+
+                return RedirectToAction("Details", new { id = novoTecnico.Id });
             }
 
             return View(viewModel);
