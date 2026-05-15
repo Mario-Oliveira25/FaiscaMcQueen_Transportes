@@ -1,5 +1,6 @@
 using FaiscaMcQueen_Transportes.Data;
 using FaiscaMcQueen_Transportes.Models;
+using FaiscaMcQueen_Transportes.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,8 @@ namespace FaiscaMcQueen_Transportes
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddTransient<IEmailService, EmailService>();
 
             var app = builder.Build();
 

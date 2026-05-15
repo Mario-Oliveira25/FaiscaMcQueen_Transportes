@@ -1,6 +1,7 @@
 ﻿using FaiscaMcQueen_Transportes.Data;
 using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
 using FaiscaMcQueen_Transportes.Models;
+using FaiscaMcQueen_Transportes.Services;
 using FaiscaMcQueen_Transportes.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,13 @@ namespace FaiscaMcQueen_Transportes.Controllers
     {
         private readonly FaiscaMcQueenContext _context;
         private readonly UserManager<ApplicationUser> _usermanager;
+        private readonly IEmailService _emailService;
 
-        public TecnicosController(FaiscaMcQueenContext context, UserManager<ApplicationUser> usermanager)
+        public TecnicosController(FaiscaMcQueenContext context, UserManager<ApplicationUser> usermanager, IEmailService emailService)
         {
             _context = context;
             _usermanager = usermanager;
+            _emailService = emailService;
         }
 
         public async Task<IActionResult> Index()
@@ -29,11 +32,11 @@ namespace FaiscaMcQueen_Transportes.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new TecnicoViewModel());
+            return View(new NovoTecnicoViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(TecnicoViewModel viewModel)
+        public async Task<IActionResult> Create(NovoTecnicoViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -52,7 +55,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
                 var user = new ApplicationUser
                 {
                     UserName = viewModel.Nome.Replace(" ", "").ToLower(),
-                    Email = $"{viewModel.Nome.Replace(" ", "").ToLower()}@faiscamcqueen.com",
+                    Email = viewModel.Email,
                     TecnicoId = novoTecnico.Id,
                     EmailConfirmed = true
                 };
@@ -60,7 +63,26 @@ namespace FaiscaMcQueen_Transportes.Controllers
 
                 if (resultado.Succeeded)
                 {
-                    await _usermanager.AddToRoleAsync(user, "Chefe de equipa");
+                    await _usermanager.AddToRoleAsync(user, "Utilizador");
+
+                    var token = await _usermanager.GeneratePasswordResetTokenAsync(user);
+
+                    // 2. Construir o link exato para a tua página de DefinirPassword
+                    var linkParaEmail = Url.Action(
+                        action: "DefinirPassword",
+                        controller: "Conta",
+                        values: new { email = user.Email, token },
+                        protocol: Request.Scheme);
+
+                    // 3. Preparar a carta
+                    string assunto = "Bem-vindo! Defina a sua palavra-passe";
+                    string mensagem = $"<h2>Olá!</h2>" +
+                                      $"<p>O seu perfil de técnico foi criado. Clique no link abaixo para criar a sua palavra-passe e aceder ao sistema:</p>" +
+                                      $"<a href='{linkParaEmail}' style='padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;'>Definir Palavra-passe</a>";
+
+                    // 4. Chamar o teu Estafeta!
+                    await _emailService.EnviarEmailAsync(user.Email, assunto, mensagem);
+
                 }
                 else if (!resultado.Succeeded)
                 {
