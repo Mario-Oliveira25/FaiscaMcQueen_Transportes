@@ -56,7 +56,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
 
             string cacheKey = $"ativo_details_{id}";
 
-            if (!_cache.TryGetValue(cacheKey, out AtivoViewModel viewModel))
+            if (!_cache.TryGetValue(cacheKey, out AtivoViewModel? viewModel))
             {
                 var ativo = await _context.Ativos
                 .FirstOrDefaultAsync(m => m.Id == id);

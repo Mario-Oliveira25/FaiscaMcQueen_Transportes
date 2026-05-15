@@ -51,10 +51,9 @@ namespace FaiscaMcQueen_Transportes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             string cacheKey = $"intervencao_details_{id}";
-            if (!_cache.TryGetValue(cacheKey, out Intervencao intervencao))
+            if (!_cache.TryGetValue(cacheKey, out Intervencao? intervencao))
             {
-                intervencao = await _context.Intervencoes.Include(i => i.Tecnico)
-                .Include(i => i.Ativo).FirstOrDefaultAsync(a => a.Id == id);
+                intervencao = await _context.Intervencoes.Include(i => i.Tecnico).Include(i => i.Ativo).FirstOrDefaultAsync(a => a.Id == id);
 
                 if (intervencao == null)
                 {
@@ -75,7 +74,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
         {
             var model = new RegistoIntervencaoViewModel();
 
-            if (!_cache.TryGetValue(ATIVOS_LIST_CACHE_KEY, out List<SelectListItem> ativos))
+            if (!_cache.TryGetValue(ATIVOS_LIST_CACHE_KEY, out List<SelectListItem>? ativos))
             {
                 ativos = _context.Ativos
                     .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Matricula })
@@ -256,7 +255,6 @@ namespace FaiscaMcQueen_Transportes.Controllers
             return View(intervencao);
         }
 
-        [Authorize(Roles = "Chefe de Equipa")]
         [HttpPost]
         public async Task<IActionResult> ChangeStatus(Guid id)
         {

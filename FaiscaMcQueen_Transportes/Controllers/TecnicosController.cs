@@ -15,27 +15,24 @@ namespace FaiscaMcQueen_Transportes.Controllers
         private readonly FaiscaMcQueenContext _context;
         private readonly UserManager<ApplicationUser> _usermanager;
         private readonly IEmailService _emailService;
-
-        public TecnicosController(FaiscaMcQueenContext context, UserManager<ApplicationUser> usermanager, IEmailService emailService)
-        {
-            _context = context;
-            _usermanager = usermanager;
-            _emailService = emailService;
         private readonly IMemoryCache _cache;
         private const string CACHE_TECNICOS_LIST = "tecnicos_list";
         private const string CACHE_TECNICO_DETAILS = "tecnico_details_{0}";
         private const int CACHE_DURATION_MINUTES = 30;
 
-        public TecnicosController(FaiscaMcQueenContext context, IMemoryCache cache)
+        public TecnicosController(FaiscaMcQueenContext context, UserManager<ApplicationUser> usermanager, IEmailService emailService, IMemoryCache cache)
         {
             _context = context;
+            _usermanager = usermanager;
+            _emailService = emailService;
             _cache = cache;
         }
+
 
         [ResponseCache(Duration = 300, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new string[] { })]
         public async Task<IActionResult> Index()
         {
-            if (!_cache.TryGetValue(CACHE_TECNICOS_LIST, out List<Tecnico> tecnicos))
+            if (!_cache.TryGetValue(CACHE_TECNICOS_LIST, out List<Tecnico>? tecnicos))
             {
                 // Se não estiver em cache, consultar base de dados
                 tecnicos = await _context.Tecnicos.ToListAsync();
@@ -126,26 +123,27 @@ namespace FaiscaMcQueen_Transportes.Controllers
 
         [HttpGet]
         [ResponseCache(Duration = 600, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new string[] { "id" })]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null) return RedirectToAction("Index");
-            if (id == null) RedirectToAction("Index");
+
             string cacheKey = string.Format(CACHE_TECNICO_DETAILS, id);
 
-            if (!_cache.TryGetValue(cacheKey, out TecnicoViewModel viewModel))
+            if (!_cache.TryGetValue(cacheKey, out TecnicoViewModel? viewModel))
             {
                 return RedirectToAction("Index");
             }
-                var tecnico = await _context.Tecnicos
+            
+            var tecnico = await _context.Tecnicos
                                           .Include(t => t.Intervencoes)
                                           .FirstOrDefaultAsync(t => t.Id == id);
 
-                if (tecnico == null)
-                {
-                    return RedirectToAction("Index");
-                }
+            if (tecnico == null)
+            {
+                return RedirectToAction("Index");
+            }
 
-                 viewModel = new TecnicoViewModel
+            viewModel = new TecnicoViewModel
             {
                 Id = tecnico.Id,
                 Nome = tecnico.Nome,
@@ -155,17 +153,16 @@ namespace FaiscaMcQueen_Transportes.Controllers
 
                 ListaIntervencoes = tecnico.Intervencoes
             };
-                var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(CACHE_DURATION_MINUTES));
+            var cacheOptions = new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(TimeSpan.FromMinutes(CACHE_DURATION_MINUTES));
 
-                _cache.Set(cacheKey, viewModel, cacheOptions);
-            }
+            _cache.Set(cacheKey, viewModel, cacheOptions);
 
             return View(viewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null) return RedirectToAction("Index");
 
@@ -214,7 +211,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null) return RedirectToAction("Index");
 
@@ -240,7 +237,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid? id)
         {
             if (id == null) return RedirectToAction("Index");
 

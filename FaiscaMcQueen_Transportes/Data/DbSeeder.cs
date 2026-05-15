@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FaiscaMcQueen_Transportes.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace FaiscaMcQueen_Transportes.Data
 {
@@ -6,18 +7,18 @@ namespace FaiscaMcQueen_Transportes.Data
     {
         public static async Task SeedRolesAndAdminAsync(IServiceProvider service)
         {
-            var userManager = service.GetService<UserManager<IdentityUser>>();
+            var userManager = service.GetService<UserManager<ApplicationUser>>();
             var roleManager = service.GetService<RoleManager<IdentityRole>>();
 
             await roleManager.CreateAsync(new IdentityRole("Chefe de Equipa"));
             await roleManager.CreateAsync(new IdentityRole("Utilizador"));
 
-            var chefeEmail = "admin@faiscamcqueen.pt";
+            var chefeEmail = "admin@transpotech.pt";
             var chefeUser = await userManager.FindByEmailAsync(chefeEmail);
 
             if (chefeUser == null)
             {
-                var newChefe = new IdentityUser
+                var newChefe = new ApplicationUser
                 {
                     UserName = chefeEmail,
                     Email = chefeEmail,
