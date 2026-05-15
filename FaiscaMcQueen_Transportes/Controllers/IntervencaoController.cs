@@ -27,14 +27,14 @@ namespace FaiscaMcQueen_Transportes.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var intervencao = await _context.Intervencoes.FirstOrDefaultAsync(a => a.Id == id);
 
             if (intervencao == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             return View(intervencao);
@@ -62,24 +62,32 @@ namespace FaiscaMcQueen_Transportes.Controllers
         public async Task<IActionResult> Create(RegistoIntervencaoViewModel model)
         {
             // Verificar se o técnico tem alguma intervenção na data pedida
-            var intervencaoExistente = await _context.Intervencoes
+            var intervencaoTecnicoExistente = await _context.Intervencoes
                 .FirstOrDefaultAsync(i => i.TecnicoId == model.TecnicoId &&
                                            i.Data.Date == model.DataIntervencao.Date);
+            var intervencaoAtivoExistente = await _context.Intervencoes
+                .FirstOrDefaultAsync(i => i.AtivoId == model.AtivoId &&
+                                            (i.Estado == Intervencao.estado.Pendente ||
+                                            i.Estado == Intervencao.estado.EmCurso));
 
-            if (intervencaoExistente != null)
+            if (intervencaoTecnicoExistente != null)
             {
-                ModelState.AddModelError("DataIntervencao", "Este técnico já tem uma intervenção agendada para esta data.");
+                return Json(new
+                {
+                    success = false,    
+                    field = "DataIntervencao",
+                    message = "Este técnico já tem uma intervenção agendada para esta data."
+                });
+            }
 
-                // Recarregar as listas de seleção
-                model.Ativos = _context.Ativos
-                    .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Matricula })
-                    .ToList();
-
-                model.Tecnicos = _context.Tecnicos
-                    .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Nome })
-                    .ToList();
-
-                return View(model);
+            if (intervencaoAtivoExistente != null)
+            {
+                return Json(new
+                {
+                    success = false,
+                    field = "AtivoId",
+                    message = "Este ativo já tem uma intervenção pendente ou em curso."
+                });
             }
 
             if (ModelState.IsValid)
@@ -112,7 +120,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
             var intervencao = await _context.Intervencoes.FindAsync(id);
             if (intervencao == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
             return View(intervencao);
         }
