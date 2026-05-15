@@ -1,7 +1,9 @@
 using FaiscaMcQueen_Transportes.Data;
+using FaiscaMcQueen_Transportes.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace FaiscaMcQueen_Transportes
 {
@@ -15,8 +17,7 @@ namespace FaiscaMcQueen_Transportes
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = true;
@@ -24,7 +25,7 @@ namespace FaiscaMcQueen_Transportes
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequiredLength = 8;
             })
-            .AddRoles<IdentityRole>()
+            .AddRoles<IdentityRole>() // Certifica-te de que as Roles estão ativadas para a Tarefa 1.3
             .AddEntityFrameworkStores<FaiscaMcQueenContext>();
 
             // Add services to the container.
