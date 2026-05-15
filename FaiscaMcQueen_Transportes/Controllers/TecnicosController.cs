@@ -54,7 +54,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null) return NotFound();
+            if (id == null) return RedirectToAction("Index");
 
             var tecnico = await _context.Tecnicos
                                       .Include(t => t.Intervencoes)
@@ -62,7 +62,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
 
             if (tecnico == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var viewModel = new TecnicoViewModel
@@ -82,13 +82,13 @@ namespace FaiscaMcQueen_Transportes.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null) return NotFound();
+            if (id == null) return RedirectToAction("Index");
 
             var tecnico = await _context.Tecnicos.FirstOrDefaultAsync(t => t.Id == id);
 
             if (tecnico == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var viewModel = new TecnicoViewModel
@@ -110,7 +110,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
             {
                 var tecnico = await _context.Tecnicos.FirstOrDefaultAsync(t => t.Id == viewModel.Id);
 
-                if (tecnico == null) return NotFound();
+                if (tecnico == null) return RedirectToAction("Index");
 
                 tecnico.Nome = viewModel.Nome;
                 tecnico.Nif = viewModel.Nif;
@@ -128,13 +128,13 @@ namespace FaiscaMcQueen_Transportes.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null) return NotFound();
+            if (id == null) return RedirectToAction("Index");
 
             var tecnico = await _context.Tecnicos.FirstOrDefaultAsync(t => t.Id == id);
 
             if (tecnico == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var viewModel = new TecnicoViewModel
@@ -150,7 +150,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (id == null) return NotFound();
+            if (id == null) return RedirectToAction("Index");
 
             var tecnico = await _context.Tecnicos.FirstOrDefaultAsync(t => t.Id == id);
 
