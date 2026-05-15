@@ -19,5 +19,29 @@ namespace FaiscaMcQueen_Transportes.ViewModels
 
         public string Modelo { get; set; } = string.Empty;
 
+        public ICollection<IntervencaoDetalhesViewModel> UltimasIntervencoes { get; set; } = new List<IntervencaoDetalhesViewModel>();
+    }
+    public class IntervencaoDetalhesViewModel
+    {
+        public Guid Id { get; set; }
+        public DateTime DataCriacao { get; set; }
+
+        public DateTime DataInicio { get; set; }
+
+        public DateTime? DataFim { get; set; }
+
+        public string Descricao { get; set; } = string.Empty;
+
+        public string Estado { get; set; } = string.Empty;
+
+        public string TecnicoNome { get; set; } = string.Empty;
+
+
+        public string DataCriacaoFormatada => DataCriacao.ToString("dd/MM/yyyy HH:mm");
+
+        public string DataInicioFormatada => DataInicio.ToString("dd/MM/yyyy HH:mm");
+
+        public string DataFimFormatada => DataFim?.ToString("dd/MM/yyyy HH:mm") ?? "-";
     }
 }
+    

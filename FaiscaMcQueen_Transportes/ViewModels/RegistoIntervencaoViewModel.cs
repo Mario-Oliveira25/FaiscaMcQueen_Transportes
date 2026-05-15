@@ -15,7 +15,13 @@ namespace FaiscaMcQueen_Transportes.ViewModels
     [Required]
     public DateTime DataIntervencao { get; set; } = DateTime.Now;
 
-    [Required]
+    [DataType(DataType.DateTime)]
+    public DateTime? DataInicio { get; set; }
+
+   [DataType(DataType.DateTime)]
+    public DateTime? DataFim { get; set; }
+
+        [Required]
     [StringLength(500)]
     public string Descricao { get; set; }= string.Empty;
 
