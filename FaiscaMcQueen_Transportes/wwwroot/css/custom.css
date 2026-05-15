@@ -1,0 +1,176 @@
+﻿:root {
+    --brand-primary: #0F172A; /* Slate Navy (Cor do teu logo) */
+    --brand-action: #0D9488; /* Tech Teal */
+    --brand-bg: #F1F5F9; /* Ice Grey */
+    --brand-text: #334155; /* Graphite */
+    --sidebar-width: 260px;
+}
+
+body {
+    background-color: var(--brand-bg);
+    color: var(--brand-text);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Sidebar Estilizada */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff; /* Fundo branco para destacar o logo azul */
+    border-right: 1px solid #e2e8f0;
+    z-index: 1000;
+    transition: all 0.3s;
+}
+
+.sidebar-header {
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.sidebar-logo {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+/* Itens do Menu */
+.nav-pills .nav-link {
+    color: var(--brand-text);
+    padding: 0.8rem 1.5rem;
+    margin: 0.2rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+    .nav-pills .nav-link i {
+        font-size: 1.2rem;
+    }
+
+    .nav-pills .nav-link:hover {
+        background-color: #f1f5f9;
+        color: var(--brand-action);
+    }
+
+    .nav-pills .nav-link.active {
+        background-color: var(--brand-action) !important;
+        color: white !important;
+    }
+
+/* Header Superior (Lado Direito) */
+.top-header {
+    height: 70px;
+    margin-left: var(--sidebar-width);
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 2rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 8px 15px;
+    border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.btn-logout {
+    color: #ef4444;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 5px 12px;
+    border: 1px solid #fee2e2;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+    .btn-logout:hover {
+        background: #ef4444;
+        color: white;
+    }
+
+/* Área de Conteúdo Principal */
+.main-content {
+    margin-left: var(--sidebar-width);
+    padding: 2rem;
+    transition: all 0.3s;
+}
+
+
+/* Dashboard KPI Cards */
+.kpi-card {
+    transition: transform 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+    .kpi-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+    }
+
+.kpi-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--brand-bg);
+    color: var(--brand-action);
+}
+
+/* Badges de Estado das Intervenções */
+.badge-pendente {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #b45309; /* Tom mais escuro para ler bem no fundo claro */
+    border: 1px solid var(--status-pendente);
+}
+
+.badge-em-curso {
+    background-color: rgba(14, 165, 233, 0.1);
+    color: #0369a1;
+    border: 1px solid var(--status-em-curso);
+}
+
+.badge-concluido {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #047857;
+    border: 1px solid var(--status-concluido);
+}
+
+.btn-custom {
+    background-color: var(--brand-action);
+    color: white;
+    font-weight: 500;
+}
+
+    .btn-custom:hover {
+        background-color: #0f766e;
+        color: white;
+    }
+
+/* Responsividade */
+@media (max-width: 991.98px) {
+    .sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+
+    .top-header, .main-content {
+        margin-left: 0;
+    }
+
+    .sidebar.active {
+        margin-left: 0;
+    }
+}

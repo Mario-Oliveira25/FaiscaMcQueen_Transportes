@@ -1,11 +1,13 @@
 ﻿using FaiscaMcQueen_Transportes.Data;
 using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
 using FaiscaMcQueen_Transportes.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FaiscaMcQueen_Transportes.Controllers
 {
+    [Authorize]
     public class AtivosController : Controller
     {
         private readonly FaiscaMcQueenContext _context;
@@ -58,7 +60,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
             return View(viewModel);
         }
 
-
+        [HttpGet]
         public IActionResult Create()
         {
             return View(new AtivoViewModel());
@@ -80,7 +82,7 @@ namespace FaiscaMcQueen_Transportes.Controllers
                     Modelo = viewModel.Modelo
                 };
 
-                _context.Update(ativo);
+                _context.Add(ativo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

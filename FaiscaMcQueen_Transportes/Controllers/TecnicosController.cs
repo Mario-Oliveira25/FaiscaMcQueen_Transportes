@@ -4,11 +4,13 @@ using FaiscaMcQueen_Transportes.Models;
 using FaiscaMcQueen_Transportes.Services;
 using FaiscaMcQueen_Transportes.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FaiscaMcQueen_Transportes.Controllers
 {
+    [Authorize]
     public class TecnicosController : Controller
     {
         private readonly FaiscaMcQueenContext _context;

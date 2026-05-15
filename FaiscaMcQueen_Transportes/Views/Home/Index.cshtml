@@ -1,8 +1,128 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-0" style="color: var(--brand-primary);">Visão Geral</h2>
+        <p class="text-muted mb-0">Resumo da atividade da frota e equipas técnicas.</p>
+    </div>
+    <a asp-controller="Intervencoes" asp-action="Create" class="btn btn-custom px-4 py-2 rounded-3">
+        <i class="bi bi-plus-lg me-2"></i> Nova Intervenção
+    </a>
+</div>
+
+<div class="row g-4 mb-5">
+    
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="kpi-card bg-white p-4 rounded-4 shadow-sm d-flex align-items-center h-100">
+            <div class="kpi-icon rounded-circle me-3 fs-3">
+                <i class="bi bi-truck"></i>
+            </div>
+            <div>
+                <p class="text-muted fw-bold mb-1" style="font-size: 0.8rem; letter-spacing: 0.5px;">ATIVOS REGISTADOS</p>
+                <h3 class="fw-bold mb-0">142</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="kpi-card bg-white p-4 rounded-4 shadow-sm d-flex align-items-center h-100">
+            <div class="kpi-icon rounded-circle me-3 fs-3">
+                <i class="bi bi-people"></i>
+            </div>
+            <div>
+                <p class="text-muted fw-bold mb-1" style="font-size: 0.8rem; letter-spacing: 0.5px;">TÉCNICOS ATIVOS</p>
+                <h3 class="fw-bold mb-0">18</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="kpi-card bg-white p-4 rounded-4 shadow-sm d-flex align-items-center h-100" style="border-left: 4px solid var(--status-pendente);">
+            <div class="kpi-icon rounded-circle me-3 fs-3" style="color: var(--status-pendente); background-color: rgba(245, 158, 11, 0.1);">
+                <i class="bi bi-hourglass-split"></i>
+            </div>
+            <div>
+                <p class="text-muted fw-bold mb-1" style="font-size: 0.8rem; letter-spacing: 0.5px;">PENDENTES</p>
+                <h3 class="fw-bold mb-0">12</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="kpi-card bg-white p-4 rounded-4 shadow-sm d-flex align-items-center h-100" style="border-left: 4px solid var(--status-em-curso);">
+            <div class="kpi-icon rounded-circle me-3 fs-3" style="color: var(--status-em-curso); background-color: rgba(14, 165, 233, 0.1);">
+                <i class="bi bi-tools"></i>
+            </div>
+            <div>
+                <p class="text-muted fw-bold mb-1" style="font-size: 0.8rem; letter-spacing: 0.5px;">EM CURSO</p>
+                <h3 class="fw-bold mb-0">5</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom-0 pt-4 pb-2 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold mb-0" style="color: var(--brand-primary);">Últimas Intervenções</h5>
+        <a asp-controller="Intervencoes" asp-action="Index" class="text-decoration-none" style="color: var(--brand-action); font-size: 0.9rem fw-bold;">Ver todas &rarr;</a>
+    </div>
+    <div class="card-body px-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="text-muted" style="font-size: 0.85rem;">
+                    <tr>
+                        <th class="fw-semibold">DATA</th>
+                        <th class="fw-semibold">ATIVO</th>
+                        <th class="fw-semibold">DESCRIÇÃO</th>
+                        <th class="fw-semibold">TÉCNICO</th>
+                        <th class="fw-semibold text-center">ESTADO</th>
+                        <th class="fw-semibold text-end">AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>15/05/2026</td>
+                        <td><b class="text-dark">Scania R450 (AA-11-BB)</b></td>
+                        <td class="text-truncate" style="max-width: 200px;">Mudança de óleo e filtros</td>
+                        <td>Carlos Mendes</td>
+                        <td class="text-center">
+                            <span class="badge badge-pendente px-3 py-2 rounded-pill">Pendente</span>
+                        </td>
+                        <td class="text-end">
+                            <a href="#" class="btn btn-sm btn-light text-muted"><i class="bi bi-eye"></i></a>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>14/05/2026</td>
+                        <td><b class="text-dark">Volvo FH16 (CC-22-DD)</b></td>
+                        <td class="text-truncate" style="max-width: 200px;">Avaria no sistema de travagem</td>
+                        <td>Ana Silva</td>
+                        <td class="text-center">
+                            <span class="badge badge-em-curso px-3 py-2 rounded-pill">Em Curso</span>
+                        </td>
+                        <td class="text-end">
+                            <a href="#" class="btn btn-sm btn-light text-muted"><i class="bi bi-eye"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>12/05/2026</td>
+                        <td><b class="text-dark">Empilhadora Toyota (EMP-01)</b></td>
+                        <td class="text-truncate" style="max-width: 200px;">Revisão semestral</td>
+                        <td>João Oliveira</td>
+                        <td class="text-center">
+                            <span class="badge badge-concluido px-3 py-2 rounded-pill">Concluído</span>
+                        </td>
+                        <td class="text-end">
+                            <a href="#" class="btn btn-sm btn-light text-muted"><i class="bi bi-eye"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

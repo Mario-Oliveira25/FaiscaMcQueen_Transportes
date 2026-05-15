@@ -1,0 +1,55 @@
+﻿@model IEnumerable<FaiscaMcQueen_Transportes.ViewModels.AtivoViewModel>
+
+@{
+    ViewData["Title"] = "Gestão de Ativos";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-0" style="color: var(--brand-primary);">
+            <i class="bi bi-truck me-2"></i>Ativos
+        </h2>
+        <p class="text-muted mb-0">Listagem de todos os veículos e máquinas da frota.</p>
+    </div>
+    <a asp-action="Create" asp-controller="Ativos" class="btn btn-custom px-4 py-2 rounded-3 shadow-sm">
+        <i class="bi bi-plus-lg me-2"></i> Adicionar Ativo
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" id="ativosTable">
+                <thead class="text-muted" style="font-size: 0.85rem; background-color: var(--brand-bg);">
+                    <tr>
+                        <th class="fw-semibold rounded-start py-3 px-3">@Html.DisplayNameFor(model => model.Matricula)</th>
+                        <th class="fw-semibold py-3">@Html.DisplayNameFor(model => model.Tipo)</th>
+                        <th class="fw-semibold py-3">@Html.DisplayNameFor(model => model.Marca)</th>
+                        <th class="fw-semibold py-3">@Html.DisplayNameFor(model => model.Modelo)</th>
+                        <th class="fw-semibold text-end rounded-end py-3 px-3">AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="px-3">
+                                <span class="badge bg-light text-dark border px-2 py-1 fs-6 font-monospace">@item.Matricula</span>
+                            </td>
+                            <td>@item.Tipo</td>
+                            <td>@item.Marca</td>
+                            <td>@item.Modelo</td>
+                            <td class="text-end px-3">
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-light text-muted" title="Detalhes">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
