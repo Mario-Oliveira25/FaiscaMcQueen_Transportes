@@ -8,7 +8,9 @@ namespace FaiscaMcQueen_Transportes.Data.FaiscaMcQueen
         public enum estado
         {
             Pendente,
+            [Display(Name = "Em Curso")]
             EmCurso,
+            [Display(Name = "Concluído")]
             Concluido
         }
         [Key]
