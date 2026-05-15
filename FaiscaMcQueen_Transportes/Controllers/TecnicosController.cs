@@ -1,11 +1,13 @@
 ﻿using FaiscaMcQueen_Transportes.Data;
 using FaiscaMcQueen_Transportes.Data.FaiscaMcQueen;
 using FaiscaMcQueen_Transportes.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FaiscaMcQueen_Transportes.Controllers
 {
+    [Authorize]
     public class TecnicosController : Controller
     {
         private readonly FaiscaMcQueenContext _context;

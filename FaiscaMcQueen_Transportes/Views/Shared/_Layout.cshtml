@@ -11,54 +11,67 @@
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="~/images/logo.png" alt="TranspoTech" class="sidebar-logo">
-            </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        // Lógica para o menu ativo que fizemos antes
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
 
-            <ul class="nav nav-pills flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" asp-controller="Home" asp-action="Index">
-                        <i class="bi bi-speedometer2"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Ativos" asp-action="Index">
-                        <i class="bi bi-truck"></i> Ativos
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Tecnicos" asp-action="Index">
-                        <i class="bi bi-people"></i> Técnicos
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Intervencoes" asp-action="Index">
-                        <i class="bi bi-tools"></i> Intervenções
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Configuracoes" asp-action="Index">
-                        <i class="bi bi-gear"></i> Definições
-                    </a>
-                </li>
-            </ul>
-        </aside>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="~/images/logo.png" alt="TranspoTech" class="sidebar-logo">
+                </div>
 
-        <header class="top-header">
-            <div class="user-info">
-                <span class="text-muted small">Olá, <b class="text-dark">Utilizador de Teste</b></span>
-                <a href="#" class="btn-logout">Sair</a>
-            </div>
-        </header>
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Ativos" ? "active" : "")" asp-controller="Ativos" asp-action="Index">
+                            <i class="bi bi-truck"></i> Ativos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Tecnicos" ? "active" : "")" asp-controller="Tecnicos" asp-action="Index">
+                            <i class="bi bi-people"></i> Técnicos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Intervencoes" ? "active" : "")" asp-controller="Intervencoes" asp-action="Index">
+                            <i class="bi bi-tools"></i> Intervenções
+                        </a>
+                    </li>
+                </ul>
+            </aside>
 
-        <main class="main-content">
-            <div class="container-fluid">
-                @RenderBody()
-            </div>
-        </main>
+            <header class="top-header">
+                <div class="user-info">
+                    <span class="text-muted small">Olá, <b class="text-dark">@User.Identity.Name</b></span>
+                
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
+                        <button type="submit" class="btn-logout bg-transparent">Sair</button>
+                    </form>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </main>
+        }
+    else
+        {
+            <main class="d-flex align-items-center justify-content-center" style="min-height: 100vh; background-color: var(--brand-bg);">
+                <div class="container">
+                    @RenderBody()
+                </div>
+            </main>
+        }
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        @await RenderSectionAsync("Scripts", required: false)
     </body>
 </html>

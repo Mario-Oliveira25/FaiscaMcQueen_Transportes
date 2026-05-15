@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FaiscaMcQueen_Transportes.Controllers
 {
+    [Authorize]
     public class IntervencaoController : Controller
     {
 
