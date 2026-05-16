@@ -1,50 +1,77 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-pt">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FaiscaMcQueen_Transportes</title>
+    <title>@ViewData["Title"] - TranspoTech</title>
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FaiscaMcQueen_Transportes.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FaiscaMcQueen_Transportes</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial.cshtml"/>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - FaiscaMcQueen_Transportes - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        // Lógica para o menu ativo que fizemos antes
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="~/images/logo.png" alt="TranspoTech" class="sidebar-logo">
+                </div>
+
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Ativos" ? "active" : "")" asp-controller="Ativos" asp-action="Index">
+                            <i class="bi bi-truck"></i> Ativos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Tecnicos" ? "active" : "")" asp-controller="Tecnicos" asp-action="Index">
+                            <i class="bi bi-people"></i> Técnicos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentController == "Intervencoes" ? "active" : "")" asp-controller="Intervencoes" asp-action="Index">
+                            <i class="bi bi-tools"></i> Intervenções
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+
+            <header class="top-header">
+                <div class="user-info">
+                    <span class="text-muted small">Olá, <b class="text-dark">@User.Identity.Name</b></span>
+                
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
+                        <button type="submit" class="btn-logout bg-transparent">Sair</button>
+                    </form>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </main>
+        }
+    else
+        {
+            <main class="d-flex align-items-center justify-content-center" style="min-height: 100vh; background-color: var(--brand-bg);">
+                <div class="container">
+                    @RenderBody()
+                </div>
+            </main>
+        }
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 </html>

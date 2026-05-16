@@ -8,6 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace FaiscaMcQueen_Transportes.Controllers
 {
+    [Authorize]
     public class IntervencaoController : Controller
     {
 
